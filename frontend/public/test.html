@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Тест POST-запроса</title>
+</head>
+
+<body>
+  <h1>Проверка POST</h1>
+  <button id="btnFetch">Сделать запрос</button>
+
+  <pre id="result"></pre>
+
+  <script>
+    const btnFetch = document.getElementById('btnFetch');
+    const resultEl = document.getElementById('result');
+
+    btnFetch.addEventListener('click', async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/calculate/mortgage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            propertyCost: 2000000,
+            downPayment: 500000,
+            annualRate: 9.6,
+            termYears: 20
+          }),
+        });
+        const data = await response.json();
+        resultEl.textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        resultEl.textContent = 'Ошибка: ' + error;
+      }
+    });
+  </script>
+</body>
+
+</html>
